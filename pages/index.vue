@@ -2,8 +2,8 @@
   <section class="container">
     <h1>Todoリスト</h1>
     <div class="addArea">
-      <input type="text" name="addName" id="addName"/>
-      <button id="addButton" class="button button--green">追加</button>
+      <input type="text" name="addName"  v-model="content" id="addName"/>
+      <button id="addButton" class="button" v-on:click="insert">追加</button>
     </div>
     <table class="Lists">
       <thead>
@@ -12,26 +12,20 @@
         </tr>
       </thead>
       <tbody>
+        <div>
         <tr v-for="(item, index) in todos" :key="index">
           <td>{{ item.content }}</td>
           <td>{{ item.created }}</td>
-          <td>
-            <button class="button">{{ item.state }}</button>
-          </td>
-          <td>
-            <button class="button button--red">削除</button>
-          </td>
-          <td></td>
+          <td><button class="button">{{ item.state }}</button></td>
+          <td><button class="button">編集</button></td>
+          <td><button class="button">削除</button></td>
         </tr>
+        </div>
       </tbody>
     </table>
-    <table class="footer">
-      <td>
         <div>
-          <button class="button button--Save">保存</button>
+          <button id="save" class="button">保存</button>
         </div>
-      </td>
-    </table>
   </section>
 </template>
 
@@ -48,34 +42,20 @@ export default {
   },
   computed: {
     ...mapState(['todos'])
+  },
+
+  methods: {
+  insert: function() {
+    if(this.content != ''){
+      this.$store.commit('insert', {content: this.content});
+      this.content = '';
+    }
   }
 }
+}
 
-const createStore = () => {
-  return new Vuex.Store({
-    state: () => ({
-      todos: [
-        { content: "テスト", created: "2020-04-30 17:00", state: "作業前" },
-        {
-          content: "コーディング",
-          created: "2020-04-30 16:00",
-          state: "作業中"
-        },
-        { content: "環境構築", created: "2020-04-30 15:30", state: "完了" }
-      ]
-    })
-  });
-};
 
-var app = new Vue({
-  el: "#addArea",
-  data: {
-    todos: []
-  },
-  methods: {
-    addTodo: function() {}
-  }
-});
+
 </script>
 
 

@@ -1,0 +1,18 @@
+.container {
+    width: 400px;
+    margin: 100px auto;
+    text-align: center;
+}
+
+.footer{
+  float: right;
+}
+
+#save{
+  float: right;
+  margin: 20px auto;
+}
+
+#Lists{
+  float: right;
+}
