@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 const createStore = () => {
   return new Vuex.Store({
     state: () => ({
-      todos: []
+      todos:  []
     }),
     mutations: {
       insert: function(state:any , obj:any) {
@@ -19,13 +19,15 @@ const createStore = () => {
           state: '作業中',
         });
       },
-      remove: function(state:any) {
+      remove: function(state:any, obj:any) {
         for(let i = 0; i < state.todos.length; i++) {
-            const ob = state.todos[i];
-                state.todos.splice(i, 1);
-                return;
+          const ob = state.todos[i];
+          if(ob.content == obj.content) {
+              state.todos.splice(i, 1);
+              return;
+          }
         }
-    }
+      }
     }
   })
 }

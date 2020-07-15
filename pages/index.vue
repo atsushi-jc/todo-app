@@ -13,17 +13,17 @@
       </thead>
       <tbody>
         <div>
-          <tr v-for="(item, index) in todos" :key="index">
-            <td>{{ item.content }}</td>
-            <td>{{ item.created }}</td>
+          <tr v-for="(todo, index) in todos" :key="index">
+            <td>{{ todo.content }}</td>
+            <td>{{ todo.created }}</td>
             <td>
-              <button class="button">{{ item.state }}</button>
+              <button class="button">{{ todo.state }}</button>
             </td>
             <td>
               <button class="button">編集</button>
             </td>
             <td>
-              <button class="button" v-on:click="remove(todo)">削除</button>
+              <button class="button" @click="remove(todo)">削除</button>
             </td>
           </tr>
         </div>
