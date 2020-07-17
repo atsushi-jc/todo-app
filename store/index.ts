@@ -1,5 +1,11 @@
 import Vuex from 'vuex';
 
+option:[
+  {id:0 ,label:'作業前'},
+  {id:1 ,label:'作業中'},
+  {id:2 ,label:'完了'}
+]
+
 const createStore = () => {
   return new Vuex.Store({
     state: () => ({
@@ -27,8 +33,11 @@ const createStore = () => {
               return;
           }
         }
+      },
+      changeState: function(state:any, obj:any){
+
       }
-    }
+    },
   })
 }
 
