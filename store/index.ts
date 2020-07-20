@@ -27,19 +27,19 @@ const createStore = () => {
       remove: function(state:any, obj:any) {
         for(let i = 0; i < state.todos.length; i++) {
           const ob = state.todos[i];
-          if(ob.content == obj.content) {
+          if(ob.content === obj.content) {
               state.todos.splice(i, 1);
               return;
           }
         }
       },
-      changeState: function(state, obj){
+      changeState: function(state:any, obj:any){
         for(let i = 0; i < state.todos.length; i++) {
           const ob = state.todos[i];
-          if(ob.content == obj.content && ob.created == obj.created && ob.state == obj.state) {
+          if(ob.content === obj.content && ob.created === obj.created && ob.state === obj.state) {
             let nowState;
             for(let j = 0; j < state.option.length; j++){
-              if(state.option[j].label == ob.state){
+              if(state.option[j].label === ob.state){
                 nowState = state.option[j].id;
               }
             }

@@ -13,6 +13,7 @@
       </thead>
       <tbody>
         <div>
+          <draggable v-model="index" element="ul" :options="{animation:300}">
           <tr v-for="(todo, index) in todos" :key="index">
             <td>{{ todo.content }}</td>
             <td>{{ todo.created }}</td>
@@ -26,6 +27,7 @@
               <button class="button" @click="remove(todo)">削除</button>
             </td>
           </tr>
+            </draggable>
         </div>
       </tbody>
     </table>
@@ -39,11 +41,15 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { mapState } from "vuex";
+import draggable from "vuedraggable";
 
 export default {
+    components: {
+    draggable
+  },
   data: function() {
     return {
-      content:  "",
+      content: ""
     };
   },
   computed: {
@@ -57,12 +63,12 @@ export default {
         this.content = "";
       }
     },
-    remove: function(todo:any) {
+    remove: function(todo: any) {
       this.$store.commit("remove", todo);
     },
-    changeState: function(todo:any) {
+    changeState: function(todo: any) {
       this.$store.commit("changeState", todo);
-    },
+    }
   }
 };
 </script>
