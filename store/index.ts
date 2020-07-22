@@ -22,6 +22,7 @@ const createStore = () => {
           content: obj.content,
           created: fmt,
           state: '作業中',
+          sortOrder: 1
         });
       },
       remove: function(state:any, obj:any) {
@@ -51,7 +52,7 @@ const createStore = () => {
             return;
           }
         }
-      }
+      },
     },
   })
 }
