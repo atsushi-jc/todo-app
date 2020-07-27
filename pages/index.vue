@@ -4,7 +4,8 @@
     <div class="addArea">
       <input type="text" name="addName" v-model="content" id="addName" />
       <button id="addButton" class="button" v-on:click="insert()">追加</button>
-      <button class="button" v-on:click="sortedTodoBycCntent()">順番切り替え</button>
+      <button class="button" v-on:click="sortedTodoBycCntent()">順番切り替え(昇順)</button>
+      <button class="button" v-on:click="sortedTodoBycCntentRevase()">順番切り替え(降順)</button>
     </div>
     <table class="Lists">
       <thead>
@@ -52,6 +53,7 @@ export default {
     return {
       content: "",
     };
+
   },
   computed: {
     ...mapState(["todos"]),
@@ -75,6 +77,14 @@ export default {
           let textA = a.content.toUpperCase();
           let textB = b.content.toUpperCase();
           return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+          textA = textB > 0 ? -1 : 1;
+        });
+    },
+    sortedTodoBycCntentRevase(){
+        return this.todos.sort((a:any, b:any) => {
+          let textA = a.content.toUpperCase();
+          let textB = b.content.toUpperCase();
+          return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
           textA = textB > 0 ? -1 : 1;
         });
     },
