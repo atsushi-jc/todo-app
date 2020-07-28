@@ -15,20 +15,30 @@
       <tbody>
         <div>
           <draggable v-model="index" element="ul" :options="{animation:300}">
-          <tr v-for="(todo, index) in todos" :key="index">
-            <td>{{ todo.content }}</td>
-            <td>{{ todo.created }}</td>
-            <td>
-              <button class="button" @click="changeState(todo)">{{ todo.state }}</button>
-            </td>
-            <td>
-              <button class="button">編集</button>
-            </td>
-            <td>
-              <button class="button" @click="remove(todo)">削除</button>
-            </td>
-          </tr>
-            </draggable>
+            <tr v-for="(todo, index) in todos" :key="index">
+              <div v-if="todo.editflag === false">
+                <td>{{ todo.content }}</td>
+              </div>
+              <div v-if="todo.editflag === true">
+                <input type="text" v-model="todo.content" />
+              </div>
+               <td>{{ todo.created }}</td>
+              <td>
+                <button class="button" @click="changeState(todo)">{{ todo.state }}</button>
+              </td>
+              <td>
+                <div v-if="todo.editflag === false">
+                  <button class="button" @click="changeflag(todo)">編集</button>
+                </div>
+                <div v-if="todo.editflag === true">
+                  <button @click="edittodo(todo)">更新</button>
+                </div>
+              </td>
+              <td>
+                <button class="button" @click="remove(todo)">削除</button>
+              </td>
+            </tr>
+          </draggable>
         </div>
       </tbody>
     </table>
@@ -43,48 +53,51 @@ import Vue from "vue";
 import Vuex from "vuex";
 import { mapState } from "vuex";
 import draggable from "vuedraggable";
-
 export default {
-    components: {
-    draggable
+  components: {
+    draggable,
   },
-  data: function() {
+  data: function () {
     return {
       content: "",
-      sortOrder: 1
+      sortOrder: 1,
+      editflag: false,
     };
   },
   computed: {
     ...mapState(["todos"]),
   },
-
   methods: {
-    insert: function() {
+    insert: function () {
       if (this.content !== "") {
         this.$store.commit("insert", { content: this.content });
         this.content = "";
       }
     },
-    remove: function(todo: any) {
+    remove: function (todo: String) {
       this.$store.commit("remove", todo);
     },
-    changeState: function(todo: any) {
+    changeState: function (todo: String) {
       this.$store.commit("changeState", todo);
     },
-    sortedTodoBycCntent(){
-        return this.todos.sort((a:any, b:any) => {
-          let textA = a.content.toUpperCase();
-          let textB = b.content.toUpperCase();
-          return (textA < textB) ? -1 : (textA > textB) ? this.sortOrder : 0;
-          textA = textB > 0 ? -1 : this.sortOrder;
-        });
+    sortedTodoBycCntent() {
+      return this.todos.sort((a: String, b: String) => {
+        let textA = a.content.toUpperCase();
+        let textB = b.content.toUpperCase();
+        return textA < textB ? -1 : textA > textB ? this.sortOrder : 0;
+        textA = textB > 0 ? -1 : this.sortOrder;
+      });
     },
-    changeOrder(){
+    changeOrder() {
       this.sortOrder = this.sortOrder > 0 ? -1 : 1;
       this.sortedTodoBycCntent();
-   },
-  }
+    },
+    changeflag(todo) {
+       this.$store.commit("changeflag", todo);
+    },
+    edittodo(todo){
+      this.editflag = false;
+    }
+  },
 };
 </script>
-
-

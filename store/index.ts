@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 const createStore = () => {
   return new Vuex.Store({
     state: () => ({
-      todos:  [],
+      todos: [],
       option:[
         {id:0 ,label:'作業前'},
         {id:1 ,label:'作業中'},
@@ -11,9 +11,9 @@ const createStore = () => {
       ]
     }),
     mutations: {
-      insert: function(state:any , obj:any) {
-        var d = new Date();
-        var fmt = d.getFullYear()
+      insert: function(state:String , obj:String) {
+        var d:Date = new Date();
+        var fmt:String = d.getFullYear()
                 + '-' + ('00' + (d.getMonth() + 1)).slice(-2)
                 + '-' + ('00' + d.getDate()).slice(-2)
                 + ' ' + ('00' + d.getHours()).slice(-2)
@@ -22,10 +22,11 @@ const createStore = () => {
           content: obj.content,
           created: fmt,
           state: '作業中',
-          sortOrder: 1
+          sortOrder: 1,
+          editflag: false,
         });
       },
-      remove: function(state:any, obj:any) {
+      remove: function(state:String, obj:String) {
         for(let i = 0; i < state.todos.length; i++) {
           const ob = state.todos[i];
           if(ob.content === obj.content) {
@@ -34,7 +35,7 @@ const createStore = () => {
           }
         }
       },
-      changeState: function(state:any, obj:any){
+      changeState: function(state:String, obj:String){
         for(let i = 0; i < state.todos.length; i++) {
           const ob = state.todos[i];
           if(ob.content === obj.content && ob.created === obj.created && ob.state === obj.state) {
@@ -53,6 +54,15 @@ const createStore = () => {
           }
         }
       },
+      changeflag: function(state:String, obj:String){
+        for(let i = 0; i < state.todos.length; i++) {
+          const ob = state.todos[i];
+          if(ob.content === obj.content && ob.created === obj.created) {
+            obj.todos.editflag = true;
+            return;
+          }
+        }
+      }
     },
   })
 }
