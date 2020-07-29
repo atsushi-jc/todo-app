@@ -31,7 +31,7 @@
                   <button class="button" @click="changeflag(todo)">編集</button>
                 </div>
                 <div v-if="todo.editflag === true">
-                  <button @click="edittodo(todo)">更新</button>
+                  <button @click="changeflag(todo)">更新</button>
                 </div>
               </td>
               <td>
@@ -74,14 +74,14 @@ export default {
         this.content = "";
       }
     },
-    remove: function (todo: String) {
+    remove: function (todo: string) {
       this.$store.commit("remove", todo);
     },
-    changeState: function (todo: String) {
+    changeState: function (todo: string) {
       this.$store.commit("changeState", todo);
     },
     sortedTodoBycCntent() {
-      return this.todos.sort((a: String, b: String) => {
+      return this.todos.sort((a: string, b: string) => {
         let textA = a.content.toUpperCase();
         let textB = b.content.toUpperCase();
         return textA < textB ? -1 : textA > textB ? this.sortOrder : 0;
@@ -92,12 +92,9 @@ export default {
       this.sortOrder = this.sortOrder > 0 ? -1 : 1;
       this.sortedTodoBycCntent();
     },
-    changeflag(todo) {
+    changeflag(todo:boolean) {
        this.$store.commit("changeflag", todo);
     },
-    edittodo(todo){
-      this.editflag = false;
-    }
   },
 };
 </script>
